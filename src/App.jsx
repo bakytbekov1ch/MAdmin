@@ -42,7 +42,7 @@ function Apple() {
             <div key={item.id} className="app__data">
               <div className="app__price">
                 <h2>MoneyTaxi:</h2>
-                <h2>{item.price}₽</h2>
+                <h2>{item.price}c</h2>
                 <h2>{item.payeer}</h2>
               </div>
               <div className="app__price">
