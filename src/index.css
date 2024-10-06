@@ -1,0 +1,111 @@
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.app {
+  height: 100vh;
+  background: #033b54;
+}
+
+.container {
+  max-width: 401px;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+
+.app__logo {
+  width: 100%;
+  height: 50px;
+  background: white;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.apple {
+  display: flex;
+  align-items: end;
+  gap: 20px;
+}
+
+.logo {
+  width: 110px;
+  height: 30px;
+  background: #f7b731;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid black;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  cursor: pointer;
+}
+
+.app__logo h1 {
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 25px;
+  padding: 0 5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.app__product {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app__data {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.app__price {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.app__price h2 {
+  color: black;
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.app__time {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__price h3 {
+  border: 1px solid black;
+  padding: 2px;
+  font-size: 15px;
+  border-radius: 3px;
+}
+
+.icon {
+  border: 1px solid black;
+  padding: 2px;
+  font-size: 17px;
+  border-radius: 3px;
+}
