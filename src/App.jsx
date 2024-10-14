@@ -4,22 +4,35 @@ import React, { useEffect, useState } from "react";
 const API = "https://6631e14cc51e14d69562ac56.mockapi.io/Mtaxi";
 
 function Apple() {
-  const [item, setItem] = useState([]);
-  const [count, setCount] = useState(() => {
-    const savedCount = localStorage.getItem("count");
-    return savedCount ? parseInt(savedCount, 10) : 10800;
-  });
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const loadItems = async () => {
+      try {
+        const res = await axios.get(API);
+        const itemsWithTimers = res.data.map((item) => ({
+          ...item,
+          count: 10800, // Initial count for each item
+        }));
+        setItems(itemsWithTimers);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadItems();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCount((prev) => {
-        const newCount = prev > 0 ? prev - 1 : 0;
-        localStorage.setItem("count", newCount);
-        return newCount;
-      });
+      setItems((prevItems) =>
+        prevItems.map((item) => ({
+          ...item,
+          count: item.count > 0 ? item.count - 1 : 0, // Decrease the timer for each item
+        }))
+      );
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // Clear the interval on component unmount
   }, []);
 
   const formatCount = (count) => {
@@ -38,28 +51,14 @@ function Apple() {
     return count < 10 ? `0${count}` : count;
   };
 
-  const handleClick = async () => {
-    try {
-      const res = await axios.get(API);
-      setItem(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${API}/${id}`);
-
-      setItem((prevItems) => prevItems.filter((i) => i.id !== id));
+      setItems((prevItems) => prevItems.filter((i) => i.id !== id));
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    handleClick();
-  }, []);
 
   return (
     <div className="app">
@@ -69,7 +68,7 @@ function Apple() {
           <h1>@</h1>
         </div>
         <div className="app__product">
-          {item.map((item) => (
+          {items.map((item) => (
             <div key={item.id} className="app__data">
               <img src={item.image} alt="image" />
 
@@ -83,7 +82,9 @@ function Apple() {
                 <h2>{item.price} сом</h2>
               </div>
               <h2>
-                {formatCount(formatCountS(formatCountM(formatCountH(count))))}
+                {formatCount(
+                  formatCountS(formatCountM(formatCountH(item.count)))
+                )}
               </h2>
               <button onClick={() => handleDelete(item.id)}>Удалить</button>
             </div>
