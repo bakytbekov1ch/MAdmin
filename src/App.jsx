@@ -5,11 +5,18 @@ const API = "https://6631e14cc51e14d69562ac56.mockapi.io/Mtaxi";
 
 function Apple() {
   const [item, setItem] = useState([]);
-  const [count, setCount] = useState(10800);
+  const [count, setCount] = useState(() => {
+    const savedCount = localStorage.getItem("count");
+    return savedCount ? parseInt(savedCount, 10) : 10800;
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCount((prev) => (prev > 0 ? prev - 1 : 0));
+      setCount((prev) => {
+        const newCount = prev > 0 ? prev - 1 : 0;
+        localStorage.setItem("count", newCount);
+        return newCount;
+      });
     }, 1000);
 
     return () => clearInterval(interval);
