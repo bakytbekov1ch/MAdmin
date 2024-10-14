@@ -5,6 +5,31 @@ const API = "https://6631e14cc51e14d69562ac56.mockapi.io/Mtaxi";
 
 function Apple() {
   const [item, setItem] = useState([]);
+  const [count, setCount] = useState(10800);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatCount = (count) => {
+    return count < 10000 ? `0${count}` : count;
+  };
+
+  const formatCountS = (count) => {
+    return count < 1000 ? `0${count}` : count;
+  };
+
+  const formatCountM = (count) => {
+    return count < 100 ? `0${count}` : count;
+  };
+
+  const formatCountH = (count) => {
+    return count < 10 ? `0${count}` : count;
+  };
 
   const handleClick = async () => {
     try {
@@ -50,7 +75,9 @@ function Apple() {
                 <h2>{item.category}</h2>
                 <h2>{item.price} сом</h2>
               </div>
-              <h2>02:59:59</h2>
+              <h2>
+                {formatCount(formatCountS(formatCountM(formatCountH(count))))}
+              </h2>
               <button onClick={() => handleDelete(item.id)}>Удалить</button>
             </div>
           ))}
